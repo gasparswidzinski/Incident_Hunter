@@ -1,0 +1,19 @@
+
+{
+  "failed_login": {
+    "enabled": true,
+    "threshold": 5,
+    "window_minutes": 10,
+    "actions": ["block_ip", "notify_email"]
+  },
+  "suspicious_process": {
+    "enabled": true,
+    "process_names": ["nmap", "hydra", "nc"],
+    "actions": ["notify_email"]
+  },
+  "critical_file_change": {
+    "enabled": true,
+    "paths": ["/etc/passwd", "/etc/shadow"],
+    "actions": ["backup_file", "notify_email"]
+  }
+}
