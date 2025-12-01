@@ -70,7 +70,12 @@ def check_processes():
                         
         except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
             pass
-        
+
+def check_network():
+    """Placeholder para el futuro módulo de red"""
+    pass
+
+
                
               
         
