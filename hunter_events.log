@@ -24,3 +24,9 @@
 2025-12-01 19:34:31,199 - WARNING - \U0001f6a8 ALERTA DE RED: Conexión a puerto extraño 8443 desde Discord.exe (PID: 13072) -> IP Destino: 162.159.138.234
 2025-12-01 19:34:31,200 - WARNING - \U0001f6a8 ALERTA DE RED: Conexión a puerto extraño 49925 desde Discord.exe (PID: 14272) -> IP Destino: 127.0.0.1
 2025-12-01 19:34:31,200 - WARNING - \U0001f6a8 ALERTA DE RED: Conexión a puerto extraño 49755 desde NVIDIA Share.exe (PID: 10672) -> IP Destino: 127.0.0.1
+2025-12-01 19:38:34,635 - INFO - Incident Hunter iniciado.
+2025-12-01 19:42:04,850 - INFO - Incident Hunter iniciado.
+2025-12-01 19:42:04,956 - WARNING - ALERTA: proceso prohibido detectado: notepad.exe (PID: 2200)
+2025-12-01 19:43:05,505 - WARNING - ALERTA: proceso prohibido detectado: notepad.exe (PID: 2200)
+2025-12-01 19:43:05,509 - WARNING - ðŸš¨ ALERTA REAL: ConexiÃ³n extraÃ±a detectada en puerto 5228 desde opera.exe (PID: 12612) -> IP Destino: 172.217.192.188
+2025-12-01 19:43:05,511 - WARNING - ðŸš¨ ALERTA REAL: ConexiÃ³n extraÃ±a detectada en puerto 5222 desde opera.exe (PID: 12612) -> IP Destino: 57.144.207.32

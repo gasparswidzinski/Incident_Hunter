@@ -81,7 +81,7 @@ logging.basicConfig(
 )
 
 def check_network():
-    """Busca conexiones sospechosas (Ignorando tráfico legítimo)"""
+    """Busca conexiones sospechosas"""
     print("📡 Escaneando conexiones de red...")
     
     # Puertos estándar
@@ -90,9 +90,9 @@ def check_network():
     # Lista blanca de programas (Nombres exactos de tus logs)
     whitelist_apps = [
         "steam.exe", "steamwebhelper.exe", "discord.exe", 
-        "opera.exe", "chrome.exe", "nvidia web helper.exe",
+         "chrome.exe", "nvidia web helper.exe",
         "nvcontainer.exe", "nvidia share.exe", "lghub_agent.exe",
-        "svchost.exe" # Proceso crítico de Windows
+        "svchost.exe" 
     ]
 
     for conn in psutil.net_connections(kind='inet'):
