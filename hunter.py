@@ -75,7 +75,22 @@ def check_network():
     """Placeholder para el futuro módulo de red"""
     pass
 
+#PROGRAMACION DE TAREAS
 
+#se ejecuta el escaneo cada X cantidad de segundos
+interval = config.get("process_hunter", {}).get("scan_interval_seconds", 60)
+
+schedule.every(interval).seconds.do(check_processes)
+# schedule.every(interval).seconds.do(check_network) # Descomentar cuando esté listo
+
+# --- BUCLE PRINCIPAL ---
+if __name__ == "__main__":
+    # Ejecutar una vez al inicio para probar
+    check_processes()
+    
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
                
               
         
