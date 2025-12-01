@@ -72,8 +72,37 @@ def check_processes():
             pass
 
 def check_network():
-    """Placeholder para el futuro módulo de red"""
-    pass
+    """Busca conexiones sospechosas (Reverse Shells o C2)"""
+    print("📡 Escaneando conexiones de red...")
+    
+    # Puertos que consideramos "seguros" o estándar (Web, DNS, etc.)
+    # En un entorno real, esta lista sería mucho más larga.
+    safe_ports = [80, 443, 53, 445, 135, 139] 
+    
+    # Obtenemos conexiones activas (tipo INET = IPv4)
+    for conn in psutil.net_connections(kind='inet'):
+        
+        # Solo nos interesan las conexiones ESTABLECIDAS (conectadas activamente)
+        if conn.status == 'ESTABLISHED':
+            
+            # Verificamos el puerto remoto (a dónde se conecta mi PC)
+            remote_ip = conn.raddr.ip
+            remote_port = conn.raddr.port
+            pid = conn.pid
+            
+            # Si el puerto NO está en la lista segura... ¡SOSPECHOSO!
+            if remote_port not in safe_ports:
+                try:
+                    process = psutil.Process(pid)
+                    proc_name = process.name()
+                except (psutil.NoSuchProcess, psutil.AccessDenied):
+                    proc_name = "Unknown"
+
+                alerta = (f"🚨 ALERTA DE RED: Conexión a puerto extraño {remote_port} "
+                          f"desde {proc_name} (PID: {pid}) -> IP Destino: {remote_ip}")
+                
+                print(alerta)
+                logging.warning(alerta)
 
 #PROGRAMACION DE TAREAS
 
