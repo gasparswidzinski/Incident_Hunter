@@ -40,6 +40,40 @@ logging.info("Incident Hunter iniciado.")
 
 #FUNCIONES DE CAZA
 
+def check_processes():
+    """busca los procesos prohibidos en rules.json"""
+    print("escaneando procesos")
+
+    #lista negra del config
+    blacklist = config.get("process_hunter", {}).get("blacklisted_names", [])
+    suspicius_paths = config.get("process_hunter", {}).get("suspicious_paths", [])
+    
+    #iteramos sobre todos los procesos activos
+    for proc in psutil.process_iter(['pid', 'name', 'exe']):
+        try:
+            p_name = proc.info['name']
+            p_path = proc.info['exe']
+            
+            #1. chequeo de nombre
+            if p_name in blacklist:
+                alerta = f"ALERTA: proceso prohibido detectado: {p_name} (PID: {proc.info['pid']})"
+                print(alerta)
+                logging.warning(alerta)
+            
+            #2. chequeo de ruta sospechosa
+            if p_path:
+                for susp_path in suspicius_paths:
+                    if susp_path.lower() in p_path.lower():
+                        alerta = f"ALERTA: proceso en ruta sospechosa detectado: {p_name} (PID: {proc.info['pid']}, Ruta: {p_path})"
+                        print(alerta)
+                        logging.warning(alerta)
+                        
+        except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+            pass
+        
+               
+              
+        
 
 
 
