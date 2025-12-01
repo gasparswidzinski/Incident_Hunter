@@ -6,7 +6,7 @@
     "memory_threshold_percent": 90
   },
   "process_hunter": {
-    "blacklisted_names": ["nc.exe", "ncat", "netcat", "mimikatz", "keygen"],
+    "blacklisted_names": ["nc.exe", "ncat", "netcat", "mimikatz", "keygen","notepad.exe"],
     "suspicious_paths": ["/tmp", "C:\\Windows\\Temp", "AppData\\Local\\Temp"]
   },
   "network_hunter": {
