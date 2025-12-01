@@ -32,7 +32,8 @@ config = load_rules()
 logging.basicConfig(
     filename='hunter_events.log',
     level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s'
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    encoding='utf-8'
 )
 
 print("INCIDENT HUNTER INICIADO - Vigilando sistema Windows...")
@@ -71,34 +72,53 @@ def check_processes():
         except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
             pass
 
+# --- LOGGING (CORREGIDO PARA ACENTOS) ---
+logging.basicConfig(
+    filename='hunter_events.log',
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    encoding='utf-8'  # <--- ESTO ARREGLA LOS SÍMBOLOS RAROS
+)
+
 def check_network():
-    """Busca conexiones sospechosas (Reverse Shells o C2)"""
+    """Busca conexiones sospechosas (Ignorando tráfico legítimo)"""
     print("📡 Escaneando conexiones de red...")
     
-    # Puertos que consideramos "seguros" o estándar (Web, DNS, etc.)
-    # En un entorno real, esta lista sería mucho más larga.
-    safe_ports = [80, 443, 53, 445, 135, 139] 
+    # Puertos estándar
+    safe_ports = [80, 443, 53, 445, 135, 139]
     
-    # Obtenemos conexiones activas (tipo INET = IPv4)
+    # Lista blanca de programas (Nombres exactos de tus logs)
+    whitelist_apps = [
+        "steam.exe", "steamwebhelper.exe", "discord.exe", 
+        "opera.exe", "chrome.exe", "nvidia web helper.exe",
+        "nvcontainer.exe", "nvidia share.exe", "lghub_agent.exe",
+        "svchost.exe" # Proceso crítico de Windows
+    ]
+
     for conn in psutil.net_connections(kind='inet'):
-        
-        # Solo nos interesan las conexiones ESTABLECIDAS (conectadas activamente)
         if conn.status == 'ESTABLISHED':
-            
-            # Verificamos el puerto remoto (a dónde se conecta mi PC)
             remote_ip = conn.raddr.ip
             remote_port = conn.raddr.port
             pid = conn.pid
             
-            # Si el puerto NO está en la lista segura... ¡SOSPECHOSO!
-            if remote_port not in safe_ports:
-                try:
-                    process = psutil.Process(pid)
-                    proc_name = process.name()
-                except (psutil.NoSuchProcess, psutil.AccessDenied):
-                    proc_name = "Unknown"
+            # FILTRO 1: Ignorar Localhost (La PC hablando consigo misma)
+            if remote_ip == "127.0.0.1":
+                continue 
 
-                alerta = (f"🚨 ALERTA DE RED: Conexión a puerto extraño {remote_port} "
+            # Intentamos obtener el nombre del proceso
+            try:
+                process = psutil.Process(pid)
+                proc_name = process.name().lower() # Convertimos a minúsculas para comparar
+            except (psutil.NoSuchProcess, psutil.AccessDenied):
+                continue # Si no podemos leerlo, pasamos (o podríamos alertar)
+
+            # FILTRO 2: Ignorar Apps de la Lista Blanca
+            if proc_name in [app.lower() for app in whitelist_apps]:
+                continue
+
+            # SI PASA LOS FILTROS Y EL PUERTO ES RARO -> ALERTA
+            if remote_port not in safe_ports:
+                alerta = (f"🚨 ALERTA REAL: Conexión extraña detectada en puerto {remote_port} "
                           f"desde {proc_name} (PID: {pid}) -> IP Destino: {remote_ip}")
                 
                 print(alerta)
@@ -110,7 +130,7 @@ def check_network():
 interval = config.get("process_hunter", {}).get("scan_interval_seconds", 60)
 
 schedule.every(interval).seconds.do(check_processes)
-# schedule.every(interval).seconds.do(check_network) # Descomentar cuando esté listo
+schedule.every(interval).seconds.do(check_network)
 
 # --- BUCLE PRINCIPAL ---
 if __name__ == "__main__":

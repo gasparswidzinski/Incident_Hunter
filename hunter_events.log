@@ -9,3 +9,18 @@
 2025-12-01 19:29:50,294 - INFO - Incident Hunter iniciado.
 2025-12-01 19:29:50,709 - WARNING - ALERTA: proceso prohibido detectado: notepad.exe (PID: 15988)
 2025-12-01 19:30:51,080 - WARNING - ALERTA: proceso prohibido detectado: notepad.exe (PID: 15988)
+2025-12-01 19:33:30,264 - INFO - Incident Hunter iniciado.
+2025-12-01 19:34:31,179 - WARNING - \U0001f6a8 ALERTA DE RED: Conexión a puerto extraño 49950 desde steam.exe (PID: 10844) -> IP Destino: 127.0.0.1
+2025-12-01 19:34:31,180 - WARNING - \U0001f6a8 ALERTA DE RED: Conexión a puerto extraño 49771 desde NVIDIA Web Helper.exe (PID: 7388) -> IP Destino: 127.0.0.1
+2025-12-01 19:34:31,180 - WARNING - \U0001f6a8 ALERTA DE RED: Conexión a puerto extraño 5228 desde opera.exe (PID: 12612) -> IP Destino: 172.217.192.188
+2025-12-01 19:34:31,183 - WARNING - \U0001f6a8 ALERTA DE RED: Conexión a puerto extraño 27019 desde steam.exe (PID: 10844) -> IP Destino: 155.133.249.164
+2025-12-01 19:34:31,184 - WARNING - \U0001f6a8 ALERTA DE RED: Conexión a puerto extraño 49930 desde steamwebhelper.exe (PID: 2944) -> IP Destino: 127.0.0.1
+2025-12-01 19:34:31,190 - WARNING - \U0001f6a8 ALERTA DE RED: Conexión a puerto extraño 65001 desde nvcontainer.exe (PID: 4076) -> IP Destino: 127.0.0.1
+2025-12-01 19:34:31,194 - WARNING - \U0001f6a8 ALERTA DE RED: Conexión a puerto extraño 49751 desde nvcontainer.exe (PID: 4076) -> IP Destino: 127.0.0.1
+2025-12-01 19:34:31,194 - WARNING - \U0001f6a8 ALERTA DE RED: Conexión a puerto extraño 6463 desde lghub_agent.exe (PID: 12048) -> IP Destino: 127.0.0.1
+2025-12-01 19:34:31,196 - WARNING - \U0001f6a8 ALERTA DE RED: Conexión a puerto extraño 5222 desde opera.exe (PID: 12612) -> IP Destino: 57.144.207.32
+2025-12-01 19:34:31,196 - WARNING - \U0001f6a8 ALERTA DE RED: Conexión a puerto extraño 49951 desde steam.exe (PID: 10844) -> IP Destino: 127.0.0.1
+2025-12-01 19:34:31,198 - WARNING - \U0001f6a8 ALERTA DE RED: Conexión a puerto extraño 49929 desde steamwebhelper.exe (PID: 2944) -> IP Destino: 127.0.0.1
+2025-12-01 19:34:31,199 - WARNING - \U0001f6a8 ALERTA DE RED: Conexión a puerto extraño 8443 desde Discord.exe (PID: 13072) -> IP Destino: 162.159.138.234
+2025-12-01 19:34:31,200 - WARNING - \U0001f6a8 ALERTA DE RED: Conexión a puerto extraño 49925 desde Discord.exe (PID: 14272) -> IP Destino: 127.0.0.1
+2025-12-01 19:34:31,200 - WARNING - \U0001f6a8 ALERTA DE RED: Conexión a puerto extraño 49755 desde NVIDIA Share.exe (PID: 10672) -> IP Destino: 127.0.0.1
