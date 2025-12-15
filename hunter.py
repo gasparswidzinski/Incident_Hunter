@@ -82,7 +82,7 @@ logging.basicConfig(
 
 def check_network():
     """Busca conexiones sospechosas"""
-    print("📡 Escaneando conexiones de red...")
+    print(" Escaneando conexiones de red...")
     
     # Puertos estándar
     safe_ports = [80, 443, 53, 445, 135, 139]
@@ -118,7 +118,7 @@ def check_network():
 
             # SI PASA LOS FILTROS Y EL PUERTO ES RARO -> ALERTA
             if remote_port not in safe_ports:
-                alerta = (f"🚨 ALERTA REAL: Conexión extraña detectada en puerto {remote_port} "
+                alerta = (f" ALERTA REAL: Conexión extraña detectada en puerto {remote_port} "
                           f"desde {proc_name} (PID: {pid}) -> IP Destino: {remote_ip}")
                 
                 print(alerta)
