@@ -40,7 +40,6 @@ print("INCIDENT HUNTER INICIADO - Vigilando sistema Windows...")
 logging.info("Incident Hunter iniciado.")
 
 #FUNCIONES DE CAZA
-
 def check_processes():
     """busca los procesos prohibidos en rules.json"""
     print("escaneando procesos")
@@ -72,12 +71,12 @@ def check_processes():
         except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
             pass
 
-# --- LOGGING (CORREGIDO PARA ACENTOS) ---
+# --- LOGGING ---
 logging.basicConfig(
     filename='hunter_events.log',
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
-    encoding='utf-8'  # <--- ESTO ARREGLA LOS SÍMBOLOS RAROS
+    encoding='utf-8' 
 )
 
 def check_network():
