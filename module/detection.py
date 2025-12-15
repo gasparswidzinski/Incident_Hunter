@@ -3,54 +3,45 @@
 import psutil
 import logging
 
-
-#FUNCIONES DE CAZA
 def check_processes(config):
-    """busca los procesos prohibidos en rules.json"""
-    print("escaneando procesos")
+    """Busca los procesos prohibidos definidos en la configuración"""
+    print(" Escaneando procesos...")
 
-    #lista negra del config
+    # Extraemos las reglas del diccionario config que recibimos
     blacklist = config.get("process_hunter", {}).get("blacklisted_names", [])
-    suspicius_paths = config.get("process_hunter", {}).get("suspicious_paths", [])
+    suspicious_paths = config.get("process_hunter", {}).get("suspicious_paths", [])
     
-    #iteramos sobre todos los procesos activos
     for proc in psutil.process_iter(['pid', 'name', 'exe']):
         try:
             p_name = proc.info['name']
             p_path = proc.info['exe']
             
-            #1. chequeo de nombre
+            # 1. Chequeo de nombre
             if p_name in blacklist:
-                alerta = f"ALERTA: proceso prohibido detectado: {p_name} (PID: {proc.info['pid']})"
+                alerta = f" ALERTA: Proceso prohibido detectado: {p_name} (PID: {proc.info['pid']})"
                 print(alerta)
                 logging.warning(alerta)
             
-            #2. chequeo de ruta sospechosa
+            # 2. Chequeo de ruta sospechosa
             if p_path:
-                for susp_path in suspicius_paths:
+                for susp_path in suspicious_paths:
                     if susp_path.lower() in p_path.lower():
-                        alerta = f"ALERTA: proceso en ruta sospechosa detectado: {p_name} (PID: {proc.info['pid']}, Ruta: {p_path})"
+                        alerta = f"⚠️ ALERTA: Ejecución en ruta sospechosa: {p_name} (Ruta: {p_path})"
                         print(alerta)
                         logging.warning(alerta)
                         
         except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
             pass
-    
 
 def check_network(config):
-    """Busca conexiones sospechosas"""
+    """Busca conexiones sospechosas basándose en la configuración"""
     print(" Escaneando conexiones de red...")
     
-    # Puertos estándar
-    safe_ports = [80, 443, 53, 445, 135, 139]
-    
-    # Lista blanca de programas (Nombres exactos de tus logs)
-    whitelist_apps = [
-        "steam.exe", "steamwebhelper.exe", "discord.exe", 
-         "chrome.exe", "nvidia web helper.exe",
-        "nvcontainer.exe", "nvidia share.exe", "lghub_agent.exe",
-        "svchost.exe" 
-    ]
+    net_config = config.get("network_hunter", {})
+    safe_ports = net_config.get("safe_ports", [])
+    whitelist_apps = net_config.get("whitelist_apps", [])
+    # Convertimos la whitelist a minúsculas para comparar fácil
+    whitelist_apps = [app.lower() for app in whitelist_apps]
 
     for conn in psutil.net_connections(kind='inet'):
         if conn.status == 'ESTABLISHED':
@@ -58,25 +49,23 @@ def check_network(config):
             remote_port = conn.raddr.port
             pid = conn.pid
             
-            # FILTRO 1: Ignorar Localhost (La PC hablando consigo misma)
+            # Ignorar Localhost
             if remote_ip == "127.0.0.1":
                 continue 
 
-            # Intentamos obtener el nombre del proceso
             try:
                 process = psutil.Process(pid)
-                proc_name = process.name().lower() # Convertimos a minúsculas para comparar
+                proc_name = process.name().lower()
             except (psutil.NoSuchProcess, psutil.AccessDenied):
-                continue # Si no podemos leerlo, pasamos (o podríamos alertar)
+                continue 
 
-            # FILTRO 2: Ignorar Apps de la Lista Blanca
-            if proc_name in [app.lower() for app in whitelist_apps]:
+            # Ignorar Apps de la Lista Blanca
+            if proc_name in whitelist_apps:
                 continue
 
-            # SI PASA LOS FILTROS Y EL PUERTO ES RARO -> ALERTA
+            # Alerta de puerto extraño
             if remote_port not in safe_ports:
-                alerta = (f" ALERTA REAL: Conexión extraña detectada en puerto {remote_port} "
+                alerta = (f" ALERTA REAL: Conexión extraña en puerto {remote_port} "
                           f"desde {proc_name} (PID: {pid}) -> IP Destino: {remote_ip}")
-                
                 print(alerta)
                 logging.warning(alerta)
