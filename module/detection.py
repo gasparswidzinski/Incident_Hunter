@@ -26,7 +26,7 @@ def check_processes(config):
             if p_path:
                 for susp_path in suspicious_paths:
                     if susp_path.lower() in p_path.lower():
-                        alerta = f"⚠️ ALERTA: Ejecución en ruta sospechosa: {p_name} (Ruta: {p_path})"
+                        alerta = f" ALERTA: Ejecución en ruta sospechosa: {p_name} (Ruta: {p_path})"
                         print(alerta)
                         logging.warning(alerta)
                         

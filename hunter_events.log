@@ -37,3 +37,7 @@
 2025-12-15 20:20:19,076 - WARNING - ALERTA: proceso en ruta sospechosa detectado: CodeSetup-stable-618725e67565b290ba4da6fe2d29f8fa1d4e3622.exe (PID: 5456, Ruta: C:\Users\User\AppData\Local\Temp\vscode-stable-user-x64\CodeSetup-stable-618725e67565b290ba4da6fe2d29f8fa1d4e3622.exe)
 2025-12-15 20:20:19,109 - WARNING - ALERTA: proceso prohibido detectado: notepad.exe (PID: 7896)
 2025-12-15 20:20:19,183 - WARNING - ALERTA: proceso en ruta sospechosa detectado: CodeSetup-stable-618725e67565b290ba4da6fe2d29f8fa1d4e3622.tmp (PID: 14864, Ruta: C:\Users\User\AppData\Local\Temp\is-JVMHQ.tmp\CodeSetup-stable-618725e67565b290ba4da6fe2d29f8fa1d4e3622.tmp)
+2025-12-15 20:40:22,201 - INFO - Incident Hunter iniciado.
+2025-12-15 20:40:22,410 - WARNING - ⚠️ ALERTA: Ejecución en ruta sospechosa: CodeSetup-stable-618725e67565b290ba4da6fe2d29f8fa1d4e3622.exe (Ruta: C:\Users\User\AppData\Local\Temp\vscode-stable-user-x64\CodeSetup-stable-618725e67565b290ba4da6fe2d29f8fa1d4e3622.exe)
+2025-12-15 20:40:22,511 - WARNING - ⚠️ ALERTA: Ejecución en ruta sospechosa: CodeSetup-stable-618725e67565b290ba4da6fe2d29f8fa1d4e3622.tmp (Ruta: C:\Users\User\AppData\Local\Temp\is-JVMHQ.tmp\CodeSetup-stable-618725e67565b290ba4da6fe2d29f8fa1d4e3622.tmp)
+2025-12-15 20:40:45,211 - INFO - Incident Hunter detenido.
