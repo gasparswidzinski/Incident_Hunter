@@ -2,6 +2,8 @@
 
 import psutil
 import logging
+from module.alerts import send_email_alert
+
 
 def check_processes(config):
     """Busca los procesos prohibidos definidos en la configuración"""
@@ -22,6 +24,10 @@ def check_processes(config):
                 print(alerta)
                 logging.warning(alerta)
             
+                # Verificamos en config si el email está activado
+                if config.get("actions", {}).get("enable_email_alert", False):
+                    send_email_alert("Proceso Prohibido Detectado", alerta)
+                    
             # 2. Chequeo de ruta sospechosa
             if p_path:
                 for susp_path in suspicious_paths:
