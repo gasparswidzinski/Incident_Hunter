@@ -35,7 +35,7 @@ def send_email_alert(subject, body):
         server.starttls()  # Iniciamos la conexión segura
         
         #nos logueamos y enviamos el mensaje
-        server.loggin(sender,password)
+        server.login(sender,password)
         server.send_message(msg)
         server.quit()
         
