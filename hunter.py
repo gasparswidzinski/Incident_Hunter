@@ -9,7 +9,7 @@ from datetime import datetime
 
 from module.detection import check_processes, check_network
 from module.alerts import send_email_alert
-
+xd
 
 # --- CONFIGURACIÓN ---
 CONFIG_PATH = os.path.join("config", "rules.json")
